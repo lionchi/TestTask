@@ -2,12 +2,13 @@ package ru.gavrilov.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.gavrilov.dto.JobDto;
 import ru.gavrilov.model.Job;
 import ru.gavrilov.model.TypeTask;
 import ru.gavrilov.repository.JobRepository;
 
-import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +30,15 @@ public class JobService {
         jobRepository.saveAll(jobs);
     }
 
+    @Transactional(readOnly = true)
     public List<JobDto> getStatistics(String nameUser, String type, String nameDevice, Date timeFrom, Date timeTo) {
-        List<Job> allBy = jobRepository.findAllBy();
-        return null;
+        TypeTask typeTask = type == null ? null : TypeTask.valueOf(type.toUpperCase());
+        return jobRepository.findAllBy(nameUser, typeTask, nameDevice, timeFrom, timeTo).stream()
+                .map(job -> {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+                    return new JobDto(job.getId(), job.getType().getNameType(), job.getUser(), job.getDevice(), job.getAmount(), simpleDateFormat.format(job.getTime()));
+                })
+                .collect(Collectors.toList());
     }
 
     public Map<String, Integer> getTotalNumberOfPages(List<JobDto> jobDtos) {

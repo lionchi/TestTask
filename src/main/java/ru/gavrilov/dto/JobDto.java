@@ -14,15 +14,18 @@ public class JobDto {
 
     private Integer amount;
 
+    private String time;
+
     public JobDto() {
     }
 
-    public JobDto(Long id, String type, String user, String device, Integer amount) {
+    public JobDto(Long id, String type, String user, String device, Integer amount, String time) {
         this.id = id;
         this.type = type;
         this.user = user;
         this.device = device;
         this.amount = amount;
+        this.time = time;
     }
 
     public Long getId() {
@@ -63,5 +66,13 @@ public class JobDto {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

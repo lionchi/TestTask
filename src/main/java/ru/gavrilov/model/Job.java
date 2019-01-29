@@ -1,6 +1,7 @@
 package ru.gavrilov.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "job")
@@ -23,14 +24,19 @@ public class Job {
     @Column(name = "amount")
     private Integer amount;
 
+    @Column(name = "time")
+    private Date time;
+
     public Job() {
     }
 
-    public Job(TypeTask type, String user, String device, Integer amount) {
+    public Job(Long id, TypeTask type, String user, String device, Integer amount, Date date) {
+        this.id = id;
         this.type = type;
         this.user = user;
         this.device = device;
         this.amount = amount;
+        this.time = date;
     }
 
     public Long getId() {
@@ -71,5 +77,13 @@ public class Job {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 }

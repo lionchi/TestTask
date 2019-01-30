@@ -1,5 +1,7 @@
 package ru.gavrilov.model;
 
+import ru.gavrilov.dto.JobDto;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,7 +17,7 @@ public class Job {
     @Column(name = "type")
     private TypeTask type;
 
-    @Column(name = "user" /*unique = true*/)
+    @Column(name = "user")
     private String user;
 
     @Column(name = "device")
@@ -85,5 +87,10 @@ public class Job {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public static Job jobDtoAsJob(JobDto jobDto) {
+        return new Job(jobDto.getId(), jobDto.getType(), jobDto.getUser(),
+                jobDto.getDevice(), jobDto.getAmount(), new Date());
     }
 }

@@ -1,12 +1,17 @@
 package ru.gavrilov.dto;
 
+import ru.gavrilov.model.Job;
+import ru.gavrilov.model.TypeTask;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @XmlRootElement
 public class JobDto {
     private Long id;
 
-    private String type;
+    private TypeTask type;
 
     private String user;
 
@@ -19,7 +24,7 @@ public class JobDto {
     public JobDto() {
     }
 
-    public JobDto(Long id, String type, String user, String device, Integer amount, String time) {
+    public JobDto(Long id, TypeTask type, String user, String device, Integer amount, String time) {
         this.id = id;
         this.type = type;
         this.user = user;
@@ -36,11 +41,11 @@ public class JobDto {
         this.id = id;
     }
 
-    public String getType() {
+    public TypeTask getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TypeTask type) {
         this.type = type;
     }
 
@@ -74,5 +79,11 @@ public class JobDto {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public static JobDto jobAsJobDto(Job job) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        return new JobDto(job.getId(), job.getType(), job.getUser(), job.getDevice(), job.getAmount(),
+                simpleDateFormat.format(job.getTime()));
     }
 }

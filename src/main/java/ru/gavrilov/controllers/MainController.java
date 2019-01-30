@@ -26,14 +26,14 @@ public class MainController {
 
     @GetMapping("/statistics")
     private ResponseEntity<List<JobDto>> getStatistics(@RequestParam(value = "user", required = false) String nameUser,
-                                                       @RequestParam(value = "type", required = false) String type,
+                                                       @RequestParam(value = "type", required = false) TypeTask type,
                                                        @RequestParam(value = "device", required = false) String nameDevice,
                                                        @RequestParam(value = "timeFrom", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date timeFrom,
                                                        @RequestParam(value = "timeTo", required = false) @DateTimeFormat(pattern = "dd.MM.yyyy") Date timeTo) {
         return ResponseEntity.ok(jobService.getStatistics(nameUser, type, nameDevice, timeFrom, timeTo));
     }
 
-    @PostMapping(value = "/jobs", consumes = {MediaType.TEXT_XML_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping(value = "/jobs", consumes = {MediaType.TEXT_XML_VALUE})
     private ResponseEntity<Map<String, Integer>> setData(@RequestBody List<JobDto> jobDtos) {
         jobService.saveAll(jobDtos);
         Map<String, Integer> map = jobService.getTotalNumberOfPages(jobDtos);

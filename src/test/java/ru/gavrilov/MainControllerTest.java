@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.gavrilov.dto.JobDto;
+import ru.gavrilov.model.TypeTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,9 @@ public class MainControllerTest {
 
     @Before
     public void setJobDtos() {
-        JobDto jobDto1 = new JobDto(1L, "print", "user1", "device1", 10, null);
-        JobDto jobDto2 = new JobDto(2L, "scan", "user1", "device1", 12, null);
-        JobDto jobDto3 = new JobDto(3L, "fax", "user2", "device1", 5, null);
+        JobDto jobDto1 = new JobDto(1L, TypeTask.PRINT, "user1", "device1", 10, null);
+        JobDto jobDto2 = new JobDto(2L, TypeTask.SCAN, "user1", "device1", 12, null);
+        JobDto jobDto3 = new JobDto(3L, TypeTask.FAX, "user2", "device1", 5, null);
         jobDtos.add(jobDto1);
         jobDtos.add(jobDto2);
         jobDtos.add(jobDto3);
@@ -54,7 +55,7 @@ public class MainControllerTest {
     public void getStatisticsTest() {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/statistics")
                 .queryParam("user", "user1")
-                .queryParam("type", "scan")
+                .queryParam("type", TypeTask.SCAN)
                 .queryParam("device", "device1");
                 //.queryParam("timeFrom", "desc")
                 //.queryParam("timeTo", "hello search");
